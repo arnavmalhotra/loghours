@@ -71,6 +71,7 @@
         v-model="notes"
         rows="2"
         placeholder="What are you working on?"
+        @input="saveTimerState"
         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
       />
     </div>
