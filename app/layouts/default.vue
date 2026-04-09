@@ -4,6 +4,8 @@
       <div class="max-w-3xl mx-auto px-4 py-3 flex justify-between items-center">
         <NuxtLink to="/" class="text-xl font-bold text-gray-800 hover:text-gray-600">Hour Logger</NuxtLink>
         <div v-if="user" class="flex items-center gap-4">
+          <NuxtLink to="/" class="text-sm text-gray-600 hover:text-gray-800 transition-colors">Track</NuxtLink>
+          <NuxtLink to="/dashboard" class="text-sm text-gray-600 hover:text-gray-800 transition-colors">Dashboard</NuxtLink>
           <button
             class="text-sm text-gray-500 hover:text-red-500 transition-colors"
             @click="logout"

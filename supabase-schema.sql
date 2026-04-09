@@ -37,3 +37,34 @@ create policy "Users can delete own logs"
   on time_logs for delete
   to authenticated
   using (auth.uid() = user_id);
+
+-- Payouts table
+create table payouts (
+  id uuid default gen_random_uuid() primary key,
+  user_id uuid references auth.users(id) on delete cascade not null default auth.uid(),
+  total_duration integer not null, -- seconds
+  total_amount numeric(10,2) not null, -- dollar amount
+  hourly_rate numeric(10,2) not null default 20.00,
+  created_at timestamptz default now()
+);
+
+-- Add payout reference to time_logs
+alter table time_logs add column payout_id uuid references payouts(id);
+
+-- Enable RLS on payouts
+alter table payouts enable row level security;
+
+create policy "Users can view own payouts"
+  on payouts for select
+  to authenticated
+  using (auth.uid() = user_id);
+
+create policy "Users can insert own payouts"
+  on payouts for insert
+  to authenticated
+  with check (auth.uid() = user_id);
+
+create policy "Users can delete own payouts"
+  on payouts for delete
+  to authenticated
+  using (auth.uid() = user_id);
